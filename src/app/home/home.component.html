@@ -1,0 +1,29 @@
+<!-- src/app/home/home.component.html -->
+<div class="home-container">
+  <div class="header">
+    <h2>Products</h2>
+    <div class="auth-status">
+      <span *ngIf="isLoggedIn" class="welcome-text">Welcome! </span>
+      <button *ngIf="isLoggedIn" (click)="logout()" class="logout-btn">Logout</button>
+      <a *ngIf="!isLoggedIn" routerLink="/login" class="login-link">Login</a>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading products...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="product-grid" *ngIf="!loading && !error && products.length > 0">
+    <div class="product-card" *ngFor="let product of products">
+      <img *ngIf="product.path" [src]="'https://localhost:44359/' + product.path" [alt]="product.productName" />
+      <div *ngIf="!product.path" class="no-image">No Image Available</div>
+      <h3>{{ product.productName }}</h3>
+      <p>Category: {{ product.category }}</p>
+      <p>Price: {{ product.price | currency }}</p>
+      <p>Minimum Quantity: {{ product.minimumQuantity }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && products.length === 0" class="no-products">
+    No products found.
+  </div>
+</div>
